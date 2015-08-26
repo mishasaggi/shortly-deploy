@@ -3,7 +3,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      //your code here
+      basic: {
+        src: ['public/client/*.js'],
+        dest: 'public/dist/concatApp.js'
+      }
     },
 
     mochaTest: {
@@ -22,25 +25,36 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      //your code here
+      my_target: {
+        files: {
+          'public/dist/concatApp.min.js': ['public/dist/concatApp.js']
+        }
+      }
     },
 
     jshint: {
-      files: [
-        // Add filespec list here
-      ],
+
+      beforeconcat: ['public/client/*.js'],
+      afterconcat: ['public/dist/concatApp.js'],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
-          'public/lib/**/*.js',
-          'public/dist/**/*.js'
+          'public/lib/**/*.js'
+          // 'public/dist/**/*.js'
         ]
       }
     },
 
     cssmin: {
-      //your code here
+      add_banner: {
+        options: {
+          banner: '/* My minified css file */'
+        },
+        files: {
+          'public/dist/style.min.css': ['public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -51,6 +65,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'concat',
+          'jshint',
           'uglify'
         ]
       },
@@ -59,12 +74,16 @@ module.exports = function(grunt) {
         tasks: ['cssmin']
       },
       server: {
-        //your code here
+        files: ['app/**/*.js',
+               'server.js',
+               'server-config.js'
+               ]
       }
     },
 
     shell: {
       prodServer: {
+        command: ['git add --all', 'git commit -m "build to production server"', 'git push heroku master' ].join('&&')
         //can be used to auto-deploy to Heroku/Azure.
       }
     },
@@ -97,13 +116,16 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'jshint',
     'mochaTest'
-    //your code here
   ]);
 
   grunt.registerTask('build', [
-    //your code here
-  ]);
+    'concat',
+    'jshint',
+    'uglify',
+    'cssmin'
+    ]);
 
   //can be used to auto-deploy.
   grunt.registerTask('upload', function(n) {

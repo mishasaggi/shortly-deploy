@@ -46,3 +46,6 @@ db/shortly.sqlite
 
 ### heroku specific ###
 Procfile
+
+### build files ###
+public/dist/*

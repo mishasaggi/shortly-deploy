@@ -37,4 +37,5 @@ window.Shortly = Backbone.View.extend({
       .filter('.' + routeName)
       .addClass('selected');
   }
+
 });
