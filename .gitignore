@@ -40,3 +40,9 @@ node_modules
 
 ### PhPStorm ###
 .idea/
+
+### SQLite schema ###
+db/shortly.sqlite
+
+### heroku specific ###
+Procfile
