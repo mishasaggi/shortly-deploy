@@ -48,4 +48,5 @@ db/shortly.sqlite
 Procfile
 
 ### build files ###
+public/dist/*
 
