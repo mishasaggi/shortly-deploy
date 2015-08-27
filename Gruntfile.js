@@ -78,14 +78,19 @@ module.exports = function(grunt) {
                'server.js',
                'server-config.js'
                ]
+      },
+      upload: {
+        files: ['server.js'],
+        tasks: ['upload']
       }
+
     },
 
     shell: {
       prodServer: {
         command: [
           'git add --all',
-          'git add public/dist/*.js -f',
+          // 'git add public/dist/*.js -f',
           'git commit -m "build to production server"',
           'git push heroku master' ].join('&&')
         //can be used to auto-deploy to Heroku/Azure.
