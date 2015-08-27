@@ -128,18 +128,19 @@ module.exports = function(grunt) {
     ]);
 
   //can be used to auto-deploy.
+  //auto deploy on changes - add to watch
   grunt.registerTask('upload', function(n) {
     //Grunt options are ways to customize tasks.  Research ways to use them.
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['deploy']);
+
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
+  grunt.registerTask('deploy', ['shell']);
 
 
 };
